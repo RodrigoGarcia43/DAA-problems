@@ -1,8 +1,6 @@
-from brute_calculate_days import solve as brute_solve
-from calculate_days import calculate_days as efficient_solve
-
-
-# print(f.read())
+from brute1 import solve as brute1_solve
+from brute2 import generate_all as brute2_solve
+from knapsack import Knapsack as knapsack_solve
 
 
 def read_file_line(f):
@@ -19,22 +17,29 @@ def read_file_line(f):
 
 
 test = "test"
-for i in range(0, 1000):
+for i in range(0, 10000):
     aux = test + str(i)
     f = open("tests/" + aux, "r")
-    scientifics = read_file_line(f)
+    capacities = read_file_line(f)
+    costs = read_file_line(f)
     tasks = read_file_line(f)
+    k = read_file_line(f)
     f.close()
 
-    brute_sol = brute_solve(scientifics, tasks)
-    greedy_sol = efficient_solve(scientifics, tasks)
+    # you can test the following codes
 
-    if not (brute_sol == greedy_sol):
+    brute1_sol = brute1_solve(capacities, costs, tasks, k[0])
+    knapsack_sol = knapsack_solve(capacities, costs, tasks, k[0])
+    # brute2_sol = brute2_solve(capacities, costs, tasks, k[0])
+
+    count = 0
+    if not (brute1_sol == knapsack_sol):
+        count += 1
         print("ERROR at " + aux)
-        print("BRUTE SOLUTION = " + str(brute_sol))
-        print("EFFICIENT SOLUTION = " + str(greedy_sol))
-        print(" ")
+        print("first SOLUTION = " + str(brute1_sol))
+        print("second SOLUTION = " + str(knapsack_sol))
 
     else:
         print("SUCCES at " + aux)
-        print(" ")
+
+    print("Found " + str(count) + " errors")

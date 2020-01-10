@@ -2,11 +2,8 @@ import random
 
 
 def generator():
-    # positions = []
-    # costs = []
-    # inits = []
     test = "test"
-    for i in range(0, 500):
+    for i in range(0, 10000):
         aux = test + str(i)
         f = open("tests/" + aux, "w")
 
@@ -33,8 +30,6 @@ def generator():
         print(init, file=f)
 
         f.close()
-
-    # return positions, costs, inits
 
 
 generator()

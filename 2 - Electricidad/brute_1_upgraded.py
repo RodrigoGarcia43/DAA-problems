@@ -3,8 +3,11 @@
 # costs : int list (lamps costs)
 # init : initial position of Fito
 
+global_best = [1000000000000000000]
 
-def turn_of(positions, costs, init, turned_of=None, actual_cost=-1, way=[], best=0, global_best=1000000000000000000):
+
+def turn_of(positions, costs, init, turned_of=None, actual_cost=-1, way=[], best=0):
+    global global_best
     way_ = []
 
     n = len(positions)
@@ -18,7 +21,7 @@ def turn_of(positions, costs, init, turned_of=None, actual_cost=-1, way=[], best
     way_ = way.copy()
     way_.append(init)
 
-    if best >= global_best:
+    if best > global_best[0]:
         turned_of[init] = False
         return 0, way_
 
@@ -37,9 +40,9 @@ def turn_of(positions, costs, init, turned_of=None, actual_cost=-1, way=[], best
 
     if (right == None and left == None):
         turned_of[init] = False
-        if best < global_best:
-            global_best = best
-        return 0, way_, global_best
+        if best < global_best[0]:
+            global_best[0] = best
+        return 0, way_
 
     if actual_cost == -1:
         actual_cost = 0
@@ -54,8 +57,11 @@ def turn_of(positions, costs, init, turned_of=None, actual_cost=-1, way=[], best
         best += actual_cost * \
             abs(positions[init] - positions[right])
 
-        calculate, way1, global_best = turn_of(
-            positions, costs, right, turned_of, actual_cost - costs[right], way1, best, global_best)
+        calculate, way1 = turn_of(
+            positions, costs, right, turned_of, actual_cost - costs[right], way1, best)
+
+        best -= actual_cost * \
+            abs(positions[init] - positions[right])
 
         calculate_right = actual_cost * \
             abs(positions[init] - positions[right]) + calculate
@@ -66,8 +72,11 @@ def turn_of(positions, costs, init, turned_of=None, actual_cost=-1, way=[], best
         best += actual_cost * \
             abs(positions[init] - positions[left])
 
-        calculate, way2, global_best = turn_of(
-            positions, costs, left, turned_of, actual_cost - costs[left], way2, best, global_best)
+        calculate, way2 = turn_of(
+            positions, costs, left, turned_of, actual_cost - costs[left], way2, best)
+
+        best -= actual_cost * \
+            abs(positions[init] - positions[left])
 
         calculate_left = actual_cost * \
             abs(positions[init] - positions[left]) + calculate
@@ -76,28 +85,12 @@ def turn_of(positions, costs, init, turned_of=None, actual_cost=-1, way=[], best
 
     turned_of[init] = False
     if calculate_right > calculate_left:
-        return calculate_left, way2, global_best
+        return calculate_left, way2
     else:
-        return calculate_right, way1, global_best
+        return calculate_right, way1
 
 
-# tests
-# positions = [4, 28, 30, 47, 199, 293, 20000, 50000]
-# costs = [124, 1253, 132, 532, 124, 634, 124, 6234]
-# init = 5
-# result, way = turn_of(positions, costs, init)
-# print(result)
-# print(way)
-
-# total_sum = 0
-# check = 0
-# pos = 0
-# n = len(positions)
-# for i in range(1, n):
-#     total_sum += costs[way[i]]
-# for i in range(1, n):
-#     check += total_sum * abs(positions[way[pos]] - positions[way[i]])
-#     total_sum -= costs[way[i]]
-
-#     pos = i
-# print(check)
+def call(positions, costs, init):
+    global global_best
+    global_best[0] = 1000000000000000000000
+    return turn_of(positions, costs, init)

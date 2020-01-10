@@ -83,7 +83,6 @@ def Solve(projects, familyDay):
         projects[i][0] += 1
     for i in range(len(familyDay)):
         familyDay[i] += 1
-    # asumiendo que los proyectos se encuentren en orden
     current = [False] * (projects[-1][0] + 1)
     RepletCurrent(current, familyDay)
     mask = [False] * len(projects)
@@ -91,21 +90,4 @@ def Solve(projects, familyDay):
     best.clear()
     for i in range(1, len(mask) + 1):
         Solve_(i, projects, current, mask, 0)
-    # print(best)
     return c[0]
-
-# p = [[13,1]]
-# f = [4]
-# # m = [False, True, True, False]
-# # c = [False] * 24
-# # c[1] = True
-# # c[10] = True
-# # c[12] = True
-# # c[19] = True
-# # print(IsPossible(2, c, m, p))
-
-
-# projects = [[1, 13], [2, 2], [5, 3], [10, 1], [
-#     13, 7], [19, 2], [20, 1], [25, 1], [30, 28]]
-# family = [14, 22]
-# print(Solve(projects, family))

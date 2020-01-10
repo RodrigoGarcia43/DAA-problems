@@ -6,11 +6,11 @@ def solve(scientifics, tasks):
     if scientifics[len(scientifics)-1] < tasks[len(tasks)-1]:
         return -1
 
-    def Analiza(result, m, capacidad, tareas):
+    def analize(result, m, capacities, tasks):
         max = 0
         count = [0] * m
         for i in range(n):
-            if capacidad[result[i]] < tareas[i]:
+            if capacities[result[i]] < tasks[i]:
                 return
             count[result[i]] += 1
             if count[result[i]] > max:
@@ -19,29 +19,29 @@ def solve(scientifics, tasks):
         if max < min[0]:
             min[0] = max
 
-    def GetArray(x):
+    def get_array(x):
         result = [0] * x
         for i in range(x):
             result[i] = i
         return result
 
-    def VariacionesConRepeticiones(a, variacion, pos, m, capacidad, tareas):
+    def Var_rep(a, variacion, pos, m, capacities, tasks):
         if pos == len(variacion):
-            Analiza(variacion, m, capacidad, tareas)
+            analize(variacion, m, capacities, tasks)
             return
         for i in range(len(a)):
             variacion[pos] = a[i]
-            VariacionesConRepeticiones(
-                a, variacion, pos + 1, m, capacidad, tareas)
+            Var_rep(
+                a, variacion, pos + 1, m, capacities, tasks)
 
-    def GenerateAll(m, n, capacidad, tareas):
-        exp = GetArray(m)
+    def generate_all(m, n, capacities, tasks):
+        exp = get_array(m)
         result = [0] * n
 
-        VariacionesConRepeticiones(exp, result, 0, m, capacidad, tareas)
+        Var_rep(exp, result, 0, m, capacities, tasks)
 
     m = len(scientifics)
     n = len(tasks)
 
-    GenerateAll(m, n, scientifics, tasks)
+    generate_all(m, n, scientifics, tasks)
     return(min[0])

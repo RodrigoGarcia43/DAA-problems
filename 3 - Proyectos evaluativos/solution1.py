@@ -13,7 +13,7 @@ def optimize_projects(projects, family_days):
     family_count = 0
     projects_count = 0
     disp = 0
-    local_proyect = [0, 0, 0, 0]
+    local_proyect = [0, 0, 0, 0]  # spended, pending, total cost, flag
 
     for i in range(0, projects[n-1][0] + 1):
 
@@ -50,23 +50,11 @@ def optimize_projects(projects, family_days):
         else:
             disp = disp + 1
 
-    # print(_projects)
-
-    # ran = []
-    # for i in range(0, len(_projects)):
-    #     ran.append([_projects[i][0], i])
-    # ran.sort()
-    # ran.reverse()
-    # print(ran)
-
-    # _projects = [[2, 0, 1], [2, 8, 10], [0, 1, 1], [0, 1, 1]]
     n = len(_projects)
     for _ in range(0, 2):
-        # print("++++++++")
 
         for i in range(0, n):
-            # print(_projects)
-            # actual = ran[i][1]
+
             pend = order(_projects, i + 1)
             possible = _projects[i][0]
 
@@ -76,7 +64,6 @@ def optimize_projects(projects, family_days):
                 for k in range(0, len(pend)):
 
                     possible -= pend[k]
-                    # print(possible)
                     if (not possible < 0):
                         amount += pend[k]
 
@@ -92,13 +79,14 @@ def optimize_projects(projects, family_days):
                                 break
                         elif(possible < 0):
                             if(k >= 2):
-                                upgrade = k-1
+                                upgrade = k - 1
                                 poss = True
                                 if look_fordward(_projects, i, amount, upgrade):
                                     poss = False
                                 else:
                                     break
                         break
+
                     if(k == len(pend) - 1):
                         upgrade = k
                         poss = True
@@ -108,13 +96,8 @@ def optimize_projects(projects, family_days):
             else:
                 poss = False
 
-            # print(pend)
-            # print(possible)
-
-            # print(poss)
             if(poss or _projects[i][0] <= _projects[i][2] and i < n-1):
-                # print(i)
-                # if(_projects[i][0] <= _projects[i][2] and timer == 0 ):
+
                 if(_projects[i][3] == 0):
                     _projects[i][3] = 1
                     _projects[i][0] += 1
@@ -134,7 +117,6 @@ def optimize_projects(projects, family_days):
                         _projects[i][0] -= (_projects[j][2] - temp)
                         gived += (_projects[j][2] - temp)
                     else:
-                        # print(_projects)
                         _projects[j][0] += _projects[i][0]
                         _projects[j][1] -= _projects[i][0]
                         gived += _projects[i][0]
@@ -144,7 +126,6 @@ def optimize_projects(projects, family_days):
                 _projects[i][1] += gived
 
     result = 0
-    # print(_projects)
     for item in _projects:
         if item[1] == 0:
             result += 1
@@ -170,9 +151,8 @@ def look_fordward(projects, index, amount, k):
         a = projects[i][0]
         if(projects[i][3] == 0):
             a += 1
-        # print(a)
-        # print(amount)
-        if (a >= amount and projects[i][1] > 0):
+
+        if (a >= amount):
 
             pend = order(projects, i + 1)
 
@@ -180,24 +160,19 @@ def look_fordward(projects, index, amount, k):
 
                 for j in range(0, len(pend)):
                     temp -= pend[j]
+
                     if(temp == 0):
                         if(j >= k):
+
                             return True
                         else:
                             break
                     if(temp < 0):
-                        if(j >= k-1):
+                        if(j-1 >= k):
                             return True
                         else:
                             break
+
+                if(j >= k and temp >= 0):
+                    return True
     return False
-
-
-projects = [[13, 11], [17, 6], [20, 8], [30, 2], [34, 32], [35, 28], [40, 15]]
-family = [7, 12, 16, 26, 36]
-print(optimize_projects(projects, family))
-
-
-# [3, 7, 9, 12, 14, 17, 19, 21]
-# [4, 5, 2, 2,  5,   8, 1,   4]
-# [5, 11, 18]

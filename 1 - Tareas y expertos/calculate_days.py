@@ -1,32 +1,35 @@
 import sys
 from math import modf
 
-# return the minimal amount of days for a group of scientifics to solve a group od tasks
+# return the minimal amount of days for a group of scientifics_ to solve a group od tasks
 
 
 def calculate_days(scientifics, tasks):
-    scientifics.sort()
-    tasks.sort()
-    tasks.append(-1)
-    n = len(tasks)
-    m = len(scientifics)
+    scientifics_ = scientifics.copy()
 
-    if scientifics[m-1] < tasks[n-2]:  # Invalid distribution of scientifics
+    scientifics_.sort()
+    tasks_ = tasks.copy()
+    tasks_.sort()
+    tasks_.append(-1)
+    n = len(tasks_)
+    m = len(scientifics_)
+
+    # Invalid distribution of scientifics_
+    if m == 0 or scientifics_[m-1] < tasks_[n-2]:
         return -1
 
     if m == 1:
         return n - 1
 
     mark = 0
-    # tasks, scientifics, quocient, rest, help
-    local_group = [0, 0, 0, 0, 0]
+    local_group = [0, 0, 0, 0, 0]  # tasks_, scientifics_, quocient, rest, help
     groups = []
 
     for i in range(0, n):
 
-        if(tasks[i] > scientifics[mark] or tasks[i] == -1):
+        if(tasks_[i] > scientifics_[mark] or tasks_[i] == -1):
 
-            while (mark < m and (tasks[i] > scientifics[mark] or tasks[i] == -1)):
+            while (mark < m and (tasks_[i] > scientifics_[mark] or tasks_[i] == -1)):
                 local_group[1] += 1
                 mark += 1
 
@@ -37,7 +40,7 @@ def calculate_days(scientifics, tasks):
     count = len(groups) - 1
 
     change = False
-    while (True):
+    while (True):    # principal loop
         if count == len(groups)-1:
             if (groups[count][0] > groups[count][1]):
                 groups[count][2] = modf(groups[count][0] / groups[count][1])[1]
@@ -92,3 +95,8 @@ def calculate_days(scientifics, tasks):
                 break
 
     return groups[len(groups)-1][2] + groups[len(groups)-1][4]
+
+
+# cap = [35, 33, 7, 37, 23, 35]
+# tasks = [17, 5, 9, 10, 13, 12, 15]
+# print(calculate_days(cap, tasks))

@@ -5,8 +5,6 @@ import sys
 # costs : int list (lamps costs)
 # init : initial position of Fito
 
-count = 0
-
 
 def turn_of(positions, costs, k):
     way = []
@@ -32,7 +30,6 @@ def turn_of(positions, costs, k):
 
             distance = abs(positions[i] - positions[k])
             calculate = costs[i] / distance
-            # print(i, calculate, distance)
             if calculate > best:
                 best = calculate
                 best_position = i
@@ -60,12 +57,3 @@ def turn_of(positions, costs, k):
                     actual_cost = actual_cost - costs[k]
 
     return sum, way
-
-
-# tests
-positions = [1, 2, 3, 4, 7, 8, 10, 25, 27, 200]
-costs = [10, 1, 15, 1, 10, 2, 5, 1, 100, 50]
-init = 5
-result, way = turn_of(positions, costs, init)
-print(result)
-print(way)

@@ -1,8 +1,3 @@
-# input
-# positions : int list (lamps positions)
-# costs : int list (lamps costs)
-# init : initial position of Fito
-
 
 def turn_of(positions, costs, init, turned_of=None, actual_cost=-1, way=[]):
     n = len(positions)
@@ -63,25 +58,3 @@ def turn_of(positions, costs, init, turned_of=None, actual_cost=-1, way=[]):
         return calculate_left, way2
     else:
         return calculate_right, way1
-
-
-# tests
-# positions = [4, 28, 30, 47, 199, 293, 20000, 50000]
-# costs = [124, 1253, 132, 532, 124, 634, 124, 6234]
-# init = 5
-# result, way = turn_of(positions, costs, init)
-# print(result)
-# print(way)
-
-# total_sum = 0
-# check = 0
-# pos = 0
-# n = len(positions)
-# for i in range(1, n):
-#     total_sum += costs[way[i]]
-# for i in range(1, n):
-#     check += total_sum * abs(positions[way[pos]] - positions[way[i]])
-#     total_sum -= costs[way[i]]
-
-#     pos = i
-# print(check)
