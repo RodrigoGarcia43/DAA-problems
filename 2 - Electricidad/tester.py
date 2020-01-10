@@ -1,4 +1,5 @@
 from brute_1 import turn_of as brute_turn
+from brute_1_upgraded import turn_of as brute_turn_upgraded
 from greedy import turn_of as greedy_turn
 
 
@@ -34,14 +35,15 @@ for i in range(0, 500):
     # print("##################################")
 
     brute_sol, brute_way = brute_turn(positions, costs, init)
-    greedy_sol, greedy_way = greedy_turn(positions, costs, init)
+    brute_turn_upgraded_sol, brute_turn_upgraded_way, _ = brute_turn_upgraded(
+        positions, costs, init)
 
-    if not (brute_sol == greedy_sol):
+    if not (brute_sol == brute_turn_upgraded_sol):
         print("ERROR at " + aux)
         print("BRUTE SOLUTION = " + str(brute_sol))
         print(brute_way)
-        print("GREEDY SOLUTION = " + str(greedy_sol))
-        print(greedy_way)
+        print("brute_turn_upgraded SOLUTION = " + str(brute_turn_upgraded_sol))
+        print(brute_turn_upgraded_way)
 
     else:
         print("SUCCES at " + aux)
