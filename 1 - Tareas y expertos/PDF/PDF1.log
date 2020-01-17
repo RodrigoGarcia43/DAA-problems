@@ -1,7 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2019.3.24)  10 JAN 2020 19:50
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2019.10.15)  17 JAN 2020 13:59
 entering extended mode
 **PDF1.tex
-("D:\thelast\DAA Problems\Tareas y Expertos\PDF1.tex"
+
+("C:\Users\Laury\Desktop\Proyecto DAA equipo 3\1 - Tareas y expertos\PDF\PDF1.t
+ex"
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -226,7 +228,8 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 35.
 LaTeX Info: Redefining \hbar on input line 50.
 )
-("D:\thelast\DAA Problems\Tareas y Expertos\PDF1.aux")
+("C:\Users\Laury\Desktop\Proyecto DAA equipo 3\1 - Tareas y expertos\PDF\PDF1.a
+ux")
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
 LaTeX Font Info:    ... okay on input line 11.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
@@ -240,8 +243,7 @@ LaTeX Font Info:    ... okay on input line 11.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
 LaTeX Font Info:    ... okay on input line 11.
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 11.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 *geometry* driver: auto-detecting
@@ -329,124 +331,100 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 31.
 
-Underfull \hbox (badness 10000) in paragraph at lines 31--34
+Underfull \hbox (badness 10000) in paragraph at lines 31--33
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 31--34
+Underfull \hbox (badness 10000) in paragraph at lines 31--33
 
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 35.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 36.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 35.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 36.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 35.
 
-Underfull \hbox (badness 10000) in paragraph at lines 36--37
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 36--37
+Underfull \hbox (badness 10000) in paragraph at lines 35--36
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 36--37
+Underfull \hbox (badness 10000) in paragraph at lines 35--36
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--40
+Underfull \hbox (badness 10000) in paragraph at lines 35--36
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--40
+Underfull \hbox (badness 10000) in paragraph at lines 38--39
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 38--39
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 40--41
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--41
 
  []
 
 [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 45--47
+Underfull \hbox (badness 10000) in paragraph at lines 44--46
 
  []
 
 [2]
-Overfull \hbox (53.83119pt too wide) in paragraph at lines 54--55
-[]\OT1/ptm/m/n/14.4 La cor-rec-ti-tud de esta soluci[]on se sus-tenta en que se
- anal-izan to-das las posi-bil-i-dades,garantizando
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 54--55
+Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 54--55
+Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--58
-
- []
-
-
-Overfull \hbox (22.33084pt too wide) in paragraph at lines 59--61
-[]\OT1/ptm/m/n/14.4 Intentamos hacer una b[]usqueda bi-na-ria so-bre un pred-i-
-cado de la forma $\OML/ztmcm/m/it/14.4 no; no; no:::si; si; si:::$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 59--61
+Underfull \hbox (badness 10000) in paragraph at lines 56--58
 
  []
 
 [3]
-Overfull \hbox (25.79945pt too wide) in paragraph at lines 62--63
-[]\OT1/ptm/m/n/14.4 Esta idea no fun-ciona pues el pred-i-cado no es nece-sari-
-a-mente de la forma $\OML/ztmcm/m/it/14.4 no; no; no:::si; si:::$\OT1/ptm/m/n/1
-4.4 ,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 62--63
+Underfull \hbox (badness 10000) in paragraph at lines 65--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--63
+Underfull \hbox (badness 10000) in paragraph at lines 65--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--67
+Underfull \hbox (badness 10000) in paragraph at lines 68--70
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 74--75
+Underfull \hbox (badness 10000) in paragraph at lines 75--76
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--75
+Underfull \hbox (badness 10000) in paragraph at lines 75--76
 
  []
 
@@ -455,36 +433,154 @@ Underfull \hbox (badness 10000) in paragraph at lines 77--79
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 80--82
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
+
+ []
+
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \gdef 
+l.90 \end{equation}
+                   
+I was expecting to see something like `(' or `\{' or
+`\}' here. If you typed, e.g., `{' instead of `\{', you
+should probably delete the `{' by typing `1' now, so that
+braces don't get unbalanced. Otherwise just proceed.
+Acceptable delimiters are characters whose \delcode is
+nonnegative, or you can use `\delimiter <delimiter code>'.
+
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 84--85
+Underfull \hbox (badness 10000) in paragraph at lines 94--95
+
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 101--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 84--85
+Underfull \hbox (badness 10000) in paragraph at lines 101--102
 
  []
 
-[6] ("D:\thelast\DAA Problems\Tareas y Expertos\PDF1.aux") ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
+
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 114--115
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 118--119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 118--119
+
+ []
+
+<mst.png, id=31, 616.55344pt x 346.29375pt>
+File: mst.png Graphic file (type png)
+ <use mst.png>
+Package pdftex.def Info: mst.png used on input line 121.
+(pdftex.def)             Requested size: 284.52756pt x 159.8096pt.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 122.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 122.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 122.
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--154
+
+ []
+
+[8 <C:/Users/Laury/Desktop/Proyecto DAA equipo 3/1 - Tareas y expertos/PDF/mst.
+png>] [9]
+Underfull \hbox (badness 10000) in paragraph at lines 155--164
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 155--164
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 155--164
+
+ []
+
+[10]
+Overfull \hbox (14.85349pt too wide) in paragraph at lines 166--167
+[]\OT1/ptm/m/n/14.4 Este al-go-ritmo tiene una com-ple-ji-dad poli-no-mial, re-
+al-iza $\OML/ztmcm/m/it/14.4 n[] [] n$ \OT1/ptm/m/n/14.4 op-era-ciones, la b[]u
+squeda
+ []
+
+[11]
+("C:\Users\Laury\Desktop\Proyecto DAA equipo 3\1 - Tareas y expertos\PDF\PDF1.a
+ux") ) 
 Here is how much of TeX's memory you used:
- 2996 strings out of 494045
- 39106 string characters out of 3145972
- 102277 words of memory out of 3000000
- 6228 multiletter control sequences out of 15000+200000
- 40554 words of font info for 92 fonts, out of 3000000 for 9000
+ 3047 strings out of 494045
+ 39867 string characters out of 3145968
+ 107277 words of memory out of 3000000
+ 6260 multiletter control sequences out of 15000+200000
+ 58193 words of font info for 133 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 27i,5n,31p,2151b,201s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files (
-x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (x86)/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
-ts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
-w/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utm
-ri8a.pfb>
-Output written on PDF1.pdf (6 pages, 84924 bytes).
+ 27i,7n,31p,2163b,267s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Pr
+ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Prog
+ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Progra
+m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program F
+iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Fil
+es (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/Mi
+KTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fo
+nts/type1/urw/times/utmri8a.pfb>
+Output written on PDF1.pdf (11 pages, 124752 bytes).
 PDF statistics:
- 46 PDF objects out of 1000 (max. 8388607)
+ 68 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
