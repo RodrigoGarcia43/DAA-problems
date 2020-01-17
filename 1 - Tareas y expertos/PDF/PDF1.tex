@@ -1,0 +1,88 @@
+\documentclass[10pt,letterpaper]{article}
+ \usepackage[latin1]{inputenc}
+ \usepackage[english]{babel}
+ \usepackage{amsmath, amssymb, amsfonts}
+ \usepackage[total={18cm,23cm}, top=2cm, left=3cm]{geometry}
+ \usepackage{graphicx}
+ \usepackage{anyfontsize}
+ \usepackage{mathptmx}
+ 
+ 
+ \begin{document}
+ 	\Large{
+
+ 	\begin{center}
+ 		
+ 		 {\Huge \bf Problemas de Dise\~no y An\'alisis de Algoritmos}\\
+ 		 \vspace{1cm}
+ 		 {\Huge \bf Problema 1: Tareas y Expertos }\\ 
+ 		 \vspace{1cm}
+ 		 {\Large \bf Equipo: 3}\\
+ 		 \vspace{0.5cm}
+ 		 {\Large \bf Miembros:}\\
+ 		 {\bf - Laura Brito Guerrero}\\
+ 		 {\bf - Sheyla Cruz Castro}\\	
+ 		 {\bf - Rodrigo Garc\'ia G\'omez}\\
+ 		 
+ 	\end{center}
+ 	
+ 	{\Large \bf Enunciado del Problema:}\\
+ 	
+ 	Imagine una cantidad n de tareas, cada una de ellas con determinada complejidad $ci$, que deben ser realizadas. Para hacer esto se cuenta con un grupo $m $ de expertos, caracterizados por sus respectivas capacidades $di$. Se sabe que el experto i-\'esimo puede ejecutar la tarea j-\'esima si $di>= cj$.Cada experto consume un d\'ia en hacer una tarea y ha de recibir por su trabajo una cantidad $ki$ de pesos, que siempre es la misma independientemente del n\'umero de tareas que resuelva. El objetivo en este problema es determinar el menor tiempo posible en que se
+ 	pueden resolver las $n$ tareas sin pagar m\'as de $k$ pesos. Se asume que las tareas se pueden hacer en cualquier orden y que distintos expertos pueden trabajar al mismo tiempo en sus respectivas tareas.
+ 	\\ \\
+ 	
+ 	\begin{abstract}
+ 		Primeramente lo atacamos con un algoritmo $fuerza$ $bruta$ exponencial que analiza todas las combinaciones posibles que resultan de distribuir los distintos expertos a tareas, y da la mejor soluci\'on posible. Este algoritmo es ineficiente, por lo cual lo intentamos por otras v\'ias. Una de ellas consist\'ia en hacer una b\'usqueda binaria sobre un predicado de la forma $no,no,no...si,si,si...$ buscando el primer si que responda a la menor cantidad de d\'ias que se requieren para realizar las $n$ tareas, pero result\'o ser un fracaso.Otra soluci\'on consiste en combinar una $mochila$ para obtener subconjuntos de elementos, con un algoritmo cuadr\'atico para determinar la mejor ganancia; este resulta $n^{3}*k$, tambi\'en de costo exponencial ya que depende del valor de k. Una cuarta idea ser\'ia  implementar un algoritmo para, dado un grupo de cient\'ificos fijo v\'alido y las tareas a completar por estos, encontrar la menor cantidad de d\'ias en que pueden lograrlo, de forma polinomial; esta es costosa, pues para determinar dicho grupo tengo que generar todas las combinaciones.\\ \\ \\
+ 	\end{abstract}
+ 	
+ 	{\Large \bf Aclaraci\'on:} \\ \\
+ 	
+ 	Para cada uno de los tres problemas se implement\'o un programa $tester generator$ que se encarga de generar de forma aleatoria una inmensa cantidad de ficheros con casos de prueba y un $tester$ con el cual se implementan estos casos con dos o m\'as m\'etodos distintos. De esta forma es posible comprobar con una alt\'isima seguridad la correctitud de un algoritmo a partir de la comparaci\'on de sus resultados con los resultados de otro algoritmo enfocado en la $fuerza \ bruta$ con una complejidad temporal muy superior, pero cuya correctitud es m\'as evidente. Adem\'as, de esta forma es f\'acil comprobar los casos espec\'ificos en los que determinado algoritmo falla, ayudando as\'i la b\'usqueda y arreglo de errores. Estas demostraciones no producen las demostraciones formales necesarias para la correcta resoluci\'on de los ejercicios, pero son muy \'utiles para dirigir correctamente los esfuerzos, ya sea para demostrar uno en el que se tenga una fuerte convicci\'on de correctitud, o para comprobar los motivos por el que otro es incorrecto. \\ \\
+ 	
+ 	
+ 	
+ 	{\Large \bf Idea Fuerza Bruta:}\\ \\
+ 		{\small \bf (brute1)}
+ 	
+ 	La idea consiste en generar todas las posibles asignaciones de expertos a tareas. Ser\'ian todas las formas de tomar $n$ tareas del conjunto de tareas(como es condici\'on necesaria que todas las tareas se realicen, se toman todas estas) donde cada una puede tomar $m$ formas distintas,o sea pueden ser realizadas por alguno de los $m$ expertos. De aqu\'i nos quedamos con la combinaci\'on que consuma la menor cantidad de d\'ias entre todas las posibles distribuciones.
+ 	
+ 	Inicialmente se esperan tres l\'ineas: la primera con la cantidad de tareas a realizar,la cantidad de expertos y el presupuesto del que se dispone, $n, m,$ y $k$ respectivamente; luego una segunda con las capacidades de los expertos; y finalmente las complejidades de cada una de las tareas. Una vez que contamos con todos los datos creamos un array con los n\'umeros en el intervalo de 0 a n-1,o sea de tama\~no n,sobre el cual trabajaremos. Por consiguiente generamos todas las posibles distribuciones a trav\'es del m\'etodo $VariacionesConRepeticiones$.
+ 	
+ 	Toda tarea tendr\'a asignada un experto y este ser\'a \'unico pues una tarea solo puede ser realizada una vez. La distribuci\'on admite elementos repetidos, o sea un experto puede realizar m\'as de una tarea.Una vez que se genera una posible distribuci\'on se analiza su factibilidad,de esto se encarga el m\'etodo $Analiza$. Para ello se comprueba que el experto i-\'esimo asignado a la tarea j-\'esima tenga capacidad mayor o igual que la complejidad de dicha tarea; y se comprueba adem\'as que la suma del dinero que recibe cada experto es menor o igual que el presupuesto con que se cuenta. Una distribuci\'on bajo estas restricciones se considera v\'alida. De todas ellas nos quedamos con la que requiera menor cantidad de d\'ias. La cantidad m\'axima de d\'ias que requiere cada disposici\'on es igual al m\'aximo de la cantidad de tareas que realiza cada experto, pues este requiere de todo un d\'ia para la realizaci\'on de la tarea y estos pueden trabajar simult\'aneamente, luego el que m\'as tareas tenga requerir\'a m\'as d\'ias, y dicha cantidad ser\'a cota m\'axima para el tiempo total requerido. Por \'ultimo nos quedamos con el m\'inimo de los m\'aximos(duraciones m\'aximas de las distintas posibilidades) pues lo que se quiere es minimizar el tiempo de realizaci\'on de las $n$ tareas.
+ 	
+ 	La correctitud de esta soluci\'on se sustenta en que se analizan todas las posibilidades,garantizando as\'i que de existir una soluci\'on se va a encontrar y se queda en todo momento con la m\'as \'optima. Este algoritmo es exponencial,genera $m^{n}$ distintas posibilidades, donde  $m$ es el n\'umero de expertos y $n$ el n\'umero de tareas a realizar. Esta soluci\'on es muy ineficiente, se demora considerablemente para peque\~nos valores de la entrada.\\ \\
+ 	
+ 	
+ 	{\Large \bf Idea 2:}\\
+ 	
+ 	Intentamos hacer una b\'usqueda binaria sobre un predicado de la forma $no,no,no...si,si,si...$ buscando el primer s\'i que \\ responda a la menor cantidad de d\'ias que se requieren para realizar las $n$ tareas. Asumimos que el predicado tendr\'ia esta forma pues supusimos que si se pueden realizar las $n$ tareas en una cantidad i de d\'ias, con $i <= n$, en una cantidad mayor tambi\'en se podr\'ia hacer, y como lo que se quiere es minimizar la cantidad de d\'ias lo que se busca es el primer $si$. Esto se puede hacer en $\log n$, el problema consiste en encontrar el experto capaz de realizar una cantidad de tareas $i$ que coincide con la cantidad d d\'ias en cuesti\'on, esta misma cantidad ser\'ia igual al m\'aximo de tareas que se le puede asignar a un experto de modo que se puedan repartir el resto de las tareas entre los expertos que quedan, este experto ya no estar\'ia disponible pues si a \'el se le pudiesen asignar m\'as tareas aumentar\'ia la cantidad de d\'ias. 
+ 	Se ordenan las tareas decrecientemente por complejidad, al igual que los costos. Se recorren intentando asignarle al experto de mayor capacidad el subconjunto de tama\~no igual a la cantidad de d\'ias en cuesti\'on o sea esa cantidad $x$ de tareas, y estas se toman por orden de complejidad. Si es posible realizar esta asignaci\'on, porque tanto el presupuesto como las capacidades lo permiten, y se puede adem\'as repartir el resto de las tareas entre los expertos que quedan, esta es una asignaci\'on correcta o sea un $si$ de mi predicado. De no ser posible asignarles esas tareas al experto de mayor capacidad fue o bien porque dicha capacidad no fue suficiente, con lo cual esa combinaci\'on no ser\'a v\'alida, pues nadie en adelante ser\'a capaz de realizarlas; o porque el presupuesto no fue suficiente, en dicho caso se prueba con el segundo subconjunto de mayor complejidad y se repite el proceso.\\
+ 	
+ 	Esta idea no funciona pues el predicado no es necesariamente de la forma $no,no,no...si,si...$, pues por ejemplo, se puede encontrar un caso en el que se pueda hacer con una cantidad i de d\'ias y no necesariamente con una cantidad mayor (por ejemplo cuando la \'unica posibilidad de hacerlo con una cantidad mayor de d\'ias se vea obligada a asignarle una tarea de m\'as complejidad a un experto cuya capacidad sea menor). Si el predicado respondiese en cambio a una cantidad menor o igual que la cantidad i-\'esima, si se podr\'ia asegurar que si es soluci\'on para $i$ lo es para todo $k >= i$, pero no tenemos forma de comprobar que la parte menor$(<) $de la desigualdad se cumple sin calcularla previamente.Por lo que dicha soluci\'on no es v\'alida.\\ \\
+ 	
+ 	
+ 	{\Large \bf Idea 3:}\\ \\
+ 	{\small \bf (calculate-days)}
+ 	
+ 	Se implement\'o un algoritmo para, dado un grupo de cient\'ificos fijo v\'alido y las tareas a completar por estos, encontrar la menor cantidad de d\'ias en que pueden lograrlo, de forma polinomial. Se tiene $n$ = la cantidad de tareas y $m$ = la cantidad de cient\'ificos. Primeramente, es necesario ordenar de forma creciente a los cient\'ificos por sus capacidades y las tareas por sus dificultades.
+ 	
+ 	La idea consiste en separar a los cient\'ificos por grupos en dependencia de la cantidad de tareas que sean capaces de cumplir. Se mantiene un puntero para cient\'ificos $(j)$ y otro para tareas $(I)$. Se avanza el puntero $i$ por las tareas hasta que el cient\'ifico $j$ no sea capaz de cumplir la tarea $i$, entonces se agrega al nuevo grupo al cient\'ifico $j$ y a todos los cient\'ificos siguientes que tampoco sean capaces de cumplir dicha tarea, avanzando el puntero $j$. Los grupos llevar\'an constancia de la cantidad de tareas que pueden cumplir y la cantidad de cient\'ificos que poseen. La conformaci\'on de los grupos se realiza en tiempo lineal $(m + n)$ pues es evidente que se pasa s\'olo una vez por cada tarea y una por cada cient\'ificos.
+ 	
+ 	Todas las tareas realizadas por un grupo se podr\'an realizar tambi\'en con los grupos superiores, por tanto se buscar\'a repartir las tareas de forma que si el grupo $i$ realiza sus tareas en un tiempo superior al grupo $i + 1$, este aumente sus d\'ias en  uno para ayudar al grupo $i$. Este proceso se repetir\'a cada vez que el grupo $i$ tenga mayor tiempo que el $i + 1$. Al realizar esto para todos los grupos, cuando el algoritmo termine, entonces en el \'ultimo grupo tendr\'a la mayor cantidad de d\'ias entre todos los dem\'as, y por tanto, como todos los dem\'as grupos finalizar\'an sus tareas en un tiempo menor o igual que \'el, esta ser\'a la cantidad de d\'ias a retornar. Este retorno tendr\'a la cantidad m\'inima de d\'ias de trabajo, puesto que los d\'ias de los grupos superiores aumentar\'an un d\'ia a la vez, mientras que los de grupos inferiores disminuir\'an en uno o m\'as d\'ias, por tanto, si el grupo $i$ se completa en m\'as d\'ias que el $i + 1$, la cantidad de d\'ias que se le aumentan a este, no ser\'a mayor que la que ten\'ia el $i$ antes de disminuirle.
+ 	
+ 	A partir de este momento, solo se trabajar\'a con la lista de grupos de cient\'ificos reci\'en formada. El ciclo principal iterar\'a por dicha lista de forma descendiente, a partir de la \'ultima posici\'on (recordemos que esta lista est\'a ordenada). Primeramente, en cada iteraci\'on (siendo la iteraci\'on $i$, que se est\'a analizando el grupo $n - i$), si la cantidad de tareas es mayor que la cantidad de cient\'ificos, se divide tareas entre cient\'ificos y se guarda en una variable $q$ (esto representa la cantidad de d\'ias necesaria para que el grupo termine sus tareas), en caso de haber resto se incrementa $q$ en uno y en una variable $r$ se almacena la diferencia entre los cient\'ificos del grupo y dicho resto (esto representa el sobrante de tareas del grupo para realizar las suyas en la cantidad de d\'ias $q$, o sea, si el grupo tiene 2 cient\'ificos y 5 tareas, en 3 d\'ias realiza sus tareas, y tiene uno de resto para almacenar). Adem\'as, si el grupo bajo an\'alisis actual realiza sus tareas en una cantidad de d\'ias $(q)$ mayor que el grupo inmediatamente superior, le pedir\'a a este una ayuda, incrementando en el grupo superior una variable que almacena las ayudas a prestar al grupo inferior; luego es necesario recalcular $q$ y $r$ del grupo actual pero retirando una cantidad de tareas similar a la cantidad de ayudas de su grupo superior multiplicada por la cantidad de cient\'ificos de este, de lo cual se encarga el ciclo principal, que se repite siempre que ocurra una $pedida \ de \ ayuda$. Si la cantidad de tareas es menor que la cantidad de cient\'ificos, el proceso es similar, con la diferencia de que en lugar de hacer un divisi\'on, en $q$ se almacenar\'a 1, y en $r$, la substracci\'on de los cient\'ificos por las tareas (si hay 5 cient\'ificos y 3 tareas, se cumplen en un d\'ia y se guarda 2 de resto para quitarle tareas al grupo inmediatamente menor) . Al terminar el ciclo principal, la soluci\'on quedar\'a representada en la cantidad de d\'ias $q$ m\'as la cantidad de ayudas prestadas por el grupo de la \'ultima posici\'on de la lista (el de las mayores capacidades).\\ \\
+ 	
+ 	
+ 	{\Large \bf Idea 4:}\\ \\
+ 	{\small \bf (knapsack)}
+ 	
+ 	Otra soluci\'on un poco m\'as eficiente para este problema es combinarlo con una $mochila$ y luego aplicarle un algoritmo cuadr\'atico que garantice obtener la mejor ganancia, sobre los elementos que se encuentran escogidos en la $mochila$, para as\'i garantizar obtener la mayor ganancia. Esta idea se lleva a cabo de la siguiente manera: inicialmente tenemos una mochila de peso $k$, el cual es el presupuesto destinado para la realizaci\'on de las tareas.  Como cada experto tiene una ganancia $k_i$ \\ independientemente de la cantidad de proyectos que realice, esta misma representar\'ia los pesos correspondientes a cada uno. 
+ 	
+ 	Como este algoritmo me garantiza que en cada momento exista una repartici\'on v\'alida de expertos, tenemos que ahora distribuir las tareas entre ellos tal que se cumpla que todas las tareas se tomen y de esta forma hallar la mejor combinaci\'on tal que el m\'aximo de las tareas entre los expertos sea m\'inima. Esta combinaci\'on asignada resultar\'a la ganancia de esta repartici\'on, y en cada elecci\'on de expertos ir guardando este m\'aximo de tareas con la intenci\'on de que la ganancia se minimice. Por lo que variaremos la salida del algoritmo $mochila$ est\'andar, puesto que en vez de buscar la ganancia m\'axima (la cantidad de d\'ias m\'aximos) se hallar\'a la m\'inima. 
+ 	
+ 	Para hallar la combinaci\'on de las tareas por los expertos de manera eficiente se realiz\'a el siguiente algoritmo: se tiene un arreglo de $n$ tareas con sus respectivas complejidades, y se tienen $m_k$ expertos escogidos. Las tareas estar\'an ordenadas decrecientemente por complejidad, y se ordenar\'an por capacidad en orden decreciente a los expertos escogidos. Se recorrer\'an las tareas en ese orden intentando otorg\'arselas a los distintos expertos, de manera tal que todos los expertos tengan tareas, y siempre se tratar\'a de otorgar la menor cantidad de tareas por experto. Esto se realiza en dos ciclos anidados siempre analizando las tareas a entregar. \\ \\
+ 	
+ }
+ 	
+ \end{document}

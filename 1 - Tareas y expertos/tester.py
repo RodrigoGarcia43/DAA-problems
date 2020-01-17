@@ -1,6 +1,7 @@
 from brute1 import solve as brute1_solve
 from brute2 import generate_all as brute2_solve
 from knapsack import Knapsack as knapsack_solve
+from greedy import binary_greedy as final_solution_solve
 
 
 def read_file_line(f):
@@ -29,17 +30,19 @@ for i in range(0, 10000):
     # you can test the following codes
 
     brute1_sol = brute1_solve(capacities, costs, tasks, k[0])
-    knapsack_sol = knapsack_solve(capacities, costs, tasks, k[0])
+    final_solution_sol = final_solution_solve(capacities, costs, tasks, k[0])
+
+    # knapsack_sol = knapsack_solve(capacities, costs, tasks, k[0])
     # brute2_sol = brute2_solve(capacities, costs, tasks, k[0])
 
     count = 0
-    if not (brute1_sol == knapsack_sol):
+    if not (brute1_sol == final_solution_sol):
         count += 1
         print("ERROR at " + aux)
         print("first SOLUTION = " + str(brute1_sol))
-        print("second SOLUTION = " + str(knapsack_sol))
+        print("second SOLUTION = " + str(final_solution_sol))
 
     else:
         print("SUCCES at " + aux)
 
-    print("Found " + str(count) + " errors")
+print("Found " + str(count) + " errors")
