@@ -1,0 +1,77 @@
+\documentclass[10pt,letterpaper]{article}
+ \usepackage[latin1]{inputenc}
+ \usepackage[english]{babel}
+ \usepackage{amsmath, amssymb, amsfonts}
+ \usepackage[total={18cm,23cm}, top=2cm, left=3cm]{geometry}
+ \usepackage{graphicx}
+ \usepackage{anyfontsize}
+ \usepackage{mathptmx}
+ 
+ 
+ \begin{document}
+ 	
+	\Large{
+ 	\begin{center}
+ 		
+ 		 {\Huge \bf Problemas de Dise\~no y An\'alisis de Algoritmos}\\
+ 		 \vspace{1cm}
+ 		 {\Huge \bf Problema 2: Electricidad }\\ 
+ 		 \vspace{1cm}
+ 		 {\Large \bf Equipo: 3}\\
+ 		 \vspace{0.5cm}
+ 		 {\Large \bf Miembros:}\\
+ 		 {\bf - Laura Brito Guerrero}\\
+ 		 {\bf - Sheyla Cruz Castro}\\	
+ 		 {\bf - Rodrigo Garc\'ia G\'omez}\\
+ 		 
+ 	\end{center}
+ 	
+ 	{\Large \bf Enunciado del Problema:}\\
+ 	
+ 	Fito tiene un trabajo interesante y muy bien remunerado. Cada ma\~nana \'el debe apagar las l\'amparas de las calles de su barrio, que casualmente est\'an todas en un mismo lado de una v\'ia recta. Fito, que gusta de divertirse en exceso, est\'a de fiesta todas las noches hasta las $05:00 \ AM$ y es exactamente a esa hora que arranca su faena de apagado de luces. Cada l\'ampara tiene un consumo definido y como Fito es muy responsable con	el ahorro de la electricidad, su meta es apagar las l\'amparas en el orden en que se minimice el total de electricidad gastada. Fito se mueve a una velocidad de $1 \ m/s$ y se sabe que apagar una l\'ampara no toma tiempo extra por lo cual Fito puede hacerlo cuando pasa por su lado. Conociendo la posici\'on inicial de Fito(que siempre es al lado de una de las l\'amparas), el consumo de cada una de estas y su respectiva ubicaci\'on, desarrolle un algoritmo que ayude a Fito a concretar su objetivo.\\ 
+ 	
+ 	\begin{abstract}
+ 		Para este problema se logr\'o obtener un algoritmo $fuerza$ $bruta$ el cual es exponencial ya que revisa todos los subconjuntos posibles de caminos. Se siguieron estrategias $greedys$ en tiempo polinomial pero eran incorrectas, por esta raz\'on se cree que el problema es NP-completo e igualmente no llegamos a ninguna demostraci\'on, tratamos de reducirlo en los problemas del $Viajante$, el $3$-$SAT$ y el $Camino$ $de$ $Hamilton$ sin obtener resultados satisfactorios. \\ \\ \\
+ 	\end{abstract} 
+ 	
+ 	{\Large \bf Idea Fuerza Bruta:}\\
+ 	
+ 	{\small \bf (Brute1)}
+ 	
+ 	El algoritmo recibe como entrada: Un arreglo de posiciones de tama\~no $n$ (siendo $n$ la cantidad de farolas a apagar) que tendr\'a en la posici\'on i, un entero que representa la posici\'on de la farola $i$. Se asume que el arreglo est\'a ordenado de forma creciente. Un arreglo de costos de tama\~no $n$, que tendr\'a en la posici\'on $i$, el costo de electricidad por segundo de la farola en la posici\'on $i$ del arreglo de posiciones. Un entero que representa la posici\'on inicial de Fito.\\
+ 	
+ 	Primeramente se abord\'o el problema con un enfoque de $Fuerza$ $Bruta$, intentando generar todos los caminos que Fito es capaz de hacer, para luego compararlos y quedarse con el de menor consumo de electricidad. La idea es, al estar Fito posicionado en $k$, comparar recursivamente la mejor soluci\'on al avanzar hacia la derecha con la mejor al avanzar hacia la izquierda en busca de la farola encendida m\'as cercana. En caso de estar apagadas todas las farolas en una direcci\'on, se avanzar\'a hacia la otra. Al estar apagadas las farolas en ambas direcciones, se entiende que se alcanz\'o un camino en el que todas las farolas se apagaron, y se retornar\'a cero en esa iteraci\'on. Para conocer la condici\'on de las farolas en cada momento, se lleva un arreglo booleano de tama\~no $n$ llamado $match$. Al entrar en cada llamado al m\'etodo recursivo, se marcar\'a como apagada la posici\'on actual de Fito, y al retornar, se volver\'a a encender. Luego con dos ciclos, uno de $k$ hasta $n$, y otro de $k$ hasta $0$, se buscar\'an dichas farolas encendidas m\'as pr\'oximas (es evidente que entre ambos ciclos se hace como m\'aximo n iteraciones). Adem\'as, se llevar\'a una variable con el costo actual por segundo de las farolas encendidas, el cual disminuir\'a al inicio de cada llamado recursivo en una cantidad igual al costo de la farola de la posici\'on actual de Fito (esto representa la acci\'on de apagar dicha farola). Luego, el costo de la opci\'on \'optima hacia la izquierda y el de la opci\'on \'optima hacia la derecha, ser\'a igual a la diferencia modular de la posici\'on actual con la posici\'on izquierda o derecha multiplicado por el costo actual por segundo de las farolas, y sumado con el llamado recursivo al m\'etodo, pasando $k$ como la posici\'on izquierda o derecha respectivamente. El m\'etodo retornar\'a el menor costo entre las opciones antes mencionadas.
+ 	
+ 	Al estar Fito en una posici\'on, tendr\'a solo dos opciones de movimiento, ya que las farolas est\'an posicionadas linealmente. Como el algoritmo analiza, para cada posici\'on, todas las opciones posibles, es evidente que todas las opciones de movimiento de Fito son analizadas, y por tanto, siempre se encontrar\'a la \'optima. El algoritmo crece exponencialmente, puesto que se analizar\'an siempre todas las $k$ permutaciones coherentes de farolas para toda $k$ entre $1$ y $n - 1$ (es solo hasta $n - 1$ puesto que la farola inicial siempre ocupar\'a el primer lugar de las permutaciones de caminos). Sin embargo, el costo del algoritmo es considerablemente menor a lo antes mencionado, ya que no se analizan las numerosas permutaciones incoherentes en las que Fito pasa sobre las farolas sin apagarlas. Estas son las que, para alg\'un $i$, $j$,  $i$ $<$ $j$ $<$ $k$, la farola de la posici\'on i est\'e antes que la de la posici\'on $j$ o para $k$ $<$ $i$ $<$ $j$, la farola de la posici\'on $j$ est\'e antes que la de la posici\'on $i$. Al analizar esto, el equipo se percat\'o de una posible mejora.\\
+ 	
+ 	
+ 	{\Large \bf Idea 2:}\\
+ 	
+ 	Al encontrarse en una farola, cuyas farolas izquierdas o derechas est\'en todas apagadas, es posible avanzar directamente hacia la \'ultima farola en la direcci\'on contraria, apagando todas las farolas intermedias, sin necesidad de analizar nunca el lado oscuro. Esto es posible hacerlo con solo un ciclo lineal. Por desgracia esto no result\'o ser m\'as que un algoritmo a\'un m\'as lento que el anterior. Sin embargo, la idea se mantuvo en mente para el futuro.\\
+ 	
+ 	{\Large \bf Idea 3:}\\
+ 	
+ 	De esa forma surgi\'o la idea de implementar un algoritmo din\'amico, la idea se basa en el hecho de que empezando por las esquinas, solo hay un camino posible, y por tanto este ser\'a el \'optimo. As\'i se calcula, empezando por la esquina m\'as cercana a la posici\'on inicial, lo m\'as \'optimo comenzando por cada farola hasta llegar a la posici\'on inicial de Fito, utilizando lo m\'as \'optimo de la farola anterior ya calculada. El problema de este m\'etodo est\'a en que la soluci\'on \'optima de cada farola anterior, var\'ia mucho al estar la nueva farola a calcular, apagada desde el inicio. Por tanto, la idea fue descartada.\\
+ 	
+ 	{\Large \bf Idea 4:}\\
+ 		
+ 	Ante la ausencia de mejores ideas, se desarroll\'o una $fuerza$ $bruta$ $mejorada$. Al completar el primer camino entero con el m\'etodo recursivo, su costo puede ser almacenado en una variable global. De esta manera antes de continuar con la implementaci\'on de cada m\'etodo recursivo, es posible comprobar si la suma actual es ya mayor que la soluci\'on almacenada en dicha variable. En caso negativo, es evidente que no es necesario seguir con ese llamado y se puede retornar instant\'aneamente. En caso de finalizar otro camino entero, se compara y actualiza la variable en caso de ser necesario. N\'otese que el algoritmo sigue teniendo complejidad $2^{n}$, sin embargo, potencialmente se reducir\'a mucho el tiempo de ejecuci\'on, pues imaginando las opciones de camino como un \'arbol binario, es posible $cortar$ ramas de grandes tama\~nos, las cuales se dejar\'ian de revisar.\\ 
+ 	
+ 	
+ 	{\Large \bf Idea 5:}\\
+ 	
+ 	{\small \bf (greedy)}
+ 	
+ 	A continuaci\'on se utiliz\'o un enfoque $greedy$ para intentar resolver el problema. Estando Fito posicionado en una farola, querr\'a apagar prioritariamente, las farolas de mayor consumo y las farolas m\'as cercanas a \'el para ahorrar el consumo de estas. Por tanto, se hace una raz\'on de costo de farola $i$ dividida entre la distancia entre las farolas $i$ y $k$. Sin embargo al compararlo con los resultados del algoritmo de $fuerza$ $bruta$ fue evidente que el algoritmo era incorrecto para ciertos casos. Para lograr una comprobaci\'on bastante acertada, se realiz\'o un generador aleatorio de casos de prueba que genera una gran cantidad de forma autom\'atica.\\ \\
+ 	
+ 	
+ 	{\Large \bf Idea 6:}\\
+ 	
+ 	Siguiendo una estrategia $greedy$, debemos seleccionar cual es la mejor opci\'on en el paso i-\'esimo. Se comienza en una posici\'on $k$ y se lleva constancia de las l\'amparas que se encuentran encendidas a la izquierda y las encendidas a la derecha. 
+ 	
+ 	En cada paso decidimos si ir a la izquierda o hacia la derecha, se lleva una suma de los costos de las l\'amparas que quedan encendidas, y se halla el gasto de moverse a la l\'ampara encendida a la izquierda y se comparar\'a con el gasto total de moverse a la l\'ampara encendida a la derecha, se decide moverse hacia la l\'ampara que maximice los gastos en ese paso. 
+ 	
+ 	Esta estrategia $greedy$ es incorrecta, ofrece resultados correctos en muchos escenarios posibles. El fallo est\'a en que no siempre es mejor elegir la l\'ampara que maximice los gastos en el paso actual aunque parece correcta ya que trata de que la parte donde m\'as consumo puede ser obtenido sea apagada lo antes posible, esto no siempre minimiza los gastos porque puede ocurrir que luego de un paso para apagar la l\'ampara que m\'as consumo permite en los pasos posteriores aumente su distancia de otra que pueda aumentar considerablemente ese gasto.\\ 
+ 	
+ }
+\end{document}

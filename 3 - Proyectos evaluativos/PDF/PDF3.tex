@@ -1,0 +1,237 @@
+\documentclass[10pt,letterpaper]{article}
+ \usepackage[latin1]{inputenc}
+ \usepackage[english]{babel}
+ \usepackage{amsmath, amssymb, amsfonts}
+ \usepackage[total={18cm,23cm}, top=2cm, left=3cm]{geometry}
+ \usepackage{graphicx}
+ \usepackage{anyfontsize}
+ \usepackage{mathptmx}
+ 
+ 
+ \begin{document}
+ 	
+		 \Large{
+ 	\begin{center}
+ 		
+ 		  {\Huge \bf Problemas de Dise\~no y An\'alisis de Algoritmos}\\
+ 		  \vspace{1cm}
+ 		  {\Huge \bf Problema 3: Proyectos Evaluativos}\\ 
+ 		  \vspace{1cm}
+ 		  {\Large \bf Equipo: 3}\\
+ 		  \vspace{0.5cm}
+ 		  {\Large \bf Miembros:}\\
+ 		  {\bf - Laura Brito Guerrero}\\
+ 		  {\bf - Sheyla Cruz Castro}\\	
+ 		  {\bf - Rodrigo Garc\'ia G\'omez}\\
+ 		 
+ 	\end{center}
+ 
+ 	{\Large \bf Enunciado del Problema:}\\
+ 	
+ 	Se termina el semestre y algunos profesores ya han orientado proyectos opcionales para que los alumnos mejoren sus notas. Uno de los estudiantes del a\~no, se decide a realizar algunos de estos proyectos y est\'a organizando su horario particular. Cada proyecto tiene un d\'ia de entrega especificado y la cantidad de d\'ias que se necesitan para completarlo. El estudiante puede trabajar en cada proyecto siguiendo cualquier orden, pero en cada d\'ia solo puede trabajar en uno de ellos. El d\'ia de entregar un proyecto no se puede hacer otra cosa que la entrega en cuesti\'on. Se sabe adem\'as que no hay dos proyectos que deban ser entregados el mismo d\'ia. La cuesti\'on se complica, porque existen ciertos eventos familiares a los que el estudiante no puede faltar. Para cada uno de estos eventos se conoce el d\'ia en que se celebra y se asegura que nunca tendr\'an lugar dos de ellos el mismo d\'ia. En esos d\'ias especiales de evento, el estudiante no puede trabajar porque debe celebrar con su familia. Ninguna fecha de entrega coincide con los d\'ias de estos eventos. El objetivo del problema consiste en seleccionar el mayor conjunto de proyectos, que el estudiante pueda realizar completamente, sin perder ninguno de los eventos familiares.\\ \\
+ 	
+	\begin{abstract}
+		Se atac\'o inicialmente por una idea $fuerza$ $bruta$ exponencial, la cual funciona ya que se prueban todas las posibles combinaciones. Luego se tienen varias ideas de soluci\'on $greedys$ y una din\'amica, pero estas no son correctas. Finalmente se alcanz\'o una soluci\'on $greedy$ satisfactoria en $n^{2}$ y se logr\'o bajarle el costo a $n\log{n}$. \\ \\
+	\end{abstract}
+	
+ 	 
+    {\Large \bf Idea Fuerza Bruta:} \\ \\
+    {\small \bf (brute)}
+ 	
+ 	Para resolver este problema primeramente se tiene un algoritmo $fuerza$ $bruta$ que genera todas las posibles combinaciones, para as\'i tomar el mayor subconjunto. Sea la entrada una lista de tuplas, donde en la posici\'on i se encuentra el proyecto i-\'esimo, y una lista con los d\'ias de celebraciones con las familias. Sin falta de formalismos se refiere a los proyectos en el array de tuplas $x$, donde el primer \'item representa el d\'ia de entrega y el segundo \'item la cantidad de d\'ias q se demora realizarlo, y el array de familia se denotar\'a por $f$. Una vez dado $x$, se ordenar\'a en orden logar\'itmico por el primer \'item.
+ 	
+ 	El problema se razonar\'a de la siguiente manera: Dado una lista de tuplas $x$ (con las caracter\'isticas antes mencionadas), y una lista de n\'umeros $f$, hallar el mayor subconjunto de los valores del primer \'item de $x$ tal que se puedan eliminar la cantidad de sus valores correspondientes en el segundo \'item tal que no intercepten entre ellos, es decir, que aun as\'i, puedan quedar posiciones vac\'ias delante de los valores seleccionados por el primer \'item(puede darse el caso en que todas se tomen, lo que s\'i es incorrecto que suceda es que se tomen m\'as posiciones de las que se encuentren disponibles), teniendo en cuenta en cada momento que las posiciones que informa $f$ siempre est\'an ocupadas. Para trabajar se crea un array booleano del tama\~no del primer \'item del \'ultimo elemento de $x + 1$. Como las posiciones que brinda $f$ siempre est\'an ocupadas, entonces se marcan como nulas ($true$). Luego generamos el conjunto potencia utilizando combinaciones sobre $x$, para luego cada vez que se arme un subconjunto analizar si es v\'alido. La validez es que existan siempre posiciones no marcadas para poder satisfacer la cantidad de posiciones (se refiere al segundo elemento de las tuplas de $x$) del subconjunto dado. Este procedimiento se realiza analizando en el array que se cre\'o auxiliar e ir marcando las posiciones que no han sido descubiertas, para que as\'i no ocurra intersecci\'on entre ellos, ya que seg\'un la orden no puede pasar. Si se lograron tachar todas las requeridas por el subconjunto correspondiente, entonces es v\'alida la selecci\'on. Se debe dejar claro que en este caso s\'i importa como marquemos las posiciones, ya que no se deben de tomar aleatoriamente. Si se analiza un poco es evidente que las mismas se analizan en orden creciente, es decir, el puntero se\~nala la i-\'esima posici\'on, cuando ya se analizaron las $i - 1$ anteriores, y a partir de ah\'i poder tachar las que no se han tomado. Ya que puede pasar que se tomen celdas luego de la posici\'on l\'imite, y eso no tiene sentido. Aclarando la cuesti\'on anterior se tiene un algoritmo que resuelve todas las posibles combinaciones de los elementos de $x$ que analiza si satisface la condici\'on de uni\'on de elementos entre ellos, ya que no puede existir una intersecci\'on dada por la l\'ogica que desempe\~na el significado de los elementos de $x$. 
+ 	
+ 	Como esta plantilla de soluci\'on genera todas las subcadenas y va guardando la m\'as \'optima en cada momento, entonces su orden computacional es de $2^{n}*m*n$, con $n$: cantidad de elementos de $x$ y $m$: mayor elemento de $x$ con respecto al primer \'item. La idea es bajar el orden a este algoritmo ya que a pesar que nos brinda la respuesta, es muy ineficiente y para valores no tan peque\~nos puede demorarse considerablemente en ejecutarse.\\ \\
+ 	
+ 	
+ 	{\Large \bf Idea 2:}\\ \\
+ 	
+ 	Una nueva visi\'on de este problema es enfrentarlo con un algoritmo $greedy$. La idea es ordenar de manera creciente los costos de $x$, es decir ordenarlos por $item2$(cantidad de d\'ias que toma hacer el proyecto), de manera tal que la mejor forma de elegir los $item1$(fecha de entrega) de $x$ sea los que menor costo tenga. Y as\'i se garantizar\'ia el \'optimo en cada paso. Se tendr\'ian como ayuda un arreglo $ocupado$, el cual recoge en la posici\'on $i$ la cantidad de unidades ocupadas por el $x[i].item1$ antes de agotar las unidades necesarias por $x[i].item2$, ya sea por las posiciones que ocupa $f$ o porque durante el transcurso del problema se ocuparon posiciones que se encuentran antes que $x[i].item1$. 
+ 	
+ 	El objetivo es recorrer el arreglo ordenado por el criterio anteriormente explicado, y as\'i verificamos si se puede colocar por las unidades que se encuentran disponibles, si es posible entonces con la ayuda de un arreglo booleano vamos marcando las posiciones que ya tom\'e, para as\'i garantizar que no se intercepten entre s\'i. El criterio de prioridad ser\'ia: recorro en sentido inverso el arreglo comenzando por la posici\'on anterior al $x[i].item1$ que estoy analizando y se van marcando aquellas posiciones que est\'en libres lo m\'as cercano a el posible, las posiciones que coincidan con alg\'un $x[k].item1$,o sea a alguna fecha de entrega, no se toman, ya que se desconocen si luego esas posiciones son necesarias marcarlas. En el caso que no se puedan marcar todas las necesarias, entonces se recurren a las posiciones de fechas de entregas de algun proyecto (algun x[k].item1) previas a ti, las cuales se necesitan tachar. Como a la vez que se verifique si es posible rellenar las posiciones de un $x[i]$ entonces siempre se puede tachar, ya que por el criterio de ordenaci\'on de los $x$ se garantiza en cada paso el \'optimo. En ese caso se tachar\'an las posiciones de $x$ las cuales se encuentren antes que $x[i].item1$ (valor modular) pero las m\'as alejadas posible del arreglo ordenado, para en un futuro garantizar la menor cantidad de anulaciones en posibles posiciones de $x$. 
+ 	
+ 	Este algoritmo funciona, pero no siempre da el m\'as \'optimo, es decir no responde al mayor subconjunto posible. El contraejemplo ser\'ia:\\
+ 	x $->$ (3,2), (5, 3), (7, 4), (8,1)\\
+ 	f $->$ 4, 6\\
+ 	
+ 	La respuesta del algoritmo $greedy$ planteado fuera ${8}$, el subconjunto representado por la posici\'on $8$, mientras que existe una soluci\'on mejor, la cual es ${8, 3}$, puesto que la posici\'on $3$ ocupa las dos posiciones libres antes que \'el y el proyecto $8$ ocupa la posici\'on $7$, la cual no puede satisfacer sus posiciones, as\'i que se asume como posici\'on inv\'alida desde un comienzo. Este tipo de casos, este algoritmo no lo recoge, puesto que siempre se asume que es mejor tomar posiciones libres y no despreciar una posici\'on que es v\'alida (es decir un $x[i].item1$) desde el principio, y esta l\'ogica no es verdadera, de ah\'i el contraejemplo anterior.\\ \\
+ 	
+ 		
+ 	{\Large \bf Idea 3:}\\ \\
+ 	 {\small \bf (binary-search)}
+ 	
+ 	Una tercera idea tambi\'en $fuerza$ $bruta$, pero mucho m\'as eficiente que la $fuerza$ $bruta$ inicialmente planteada, pues reduce considerablemente el n\'umero de combinaciones generadas, es la siguiente:
+ 	
+ 	Para lograr el objetivo de optener la mayor cantidad de proyectos que es posible realizar se define la funci\'on :\\
+ 	
+	 	\begin{equation}
+			f(x) = \left\{\begin{array}{lcc}
+			1 & si &  posible \\
+			0 & si & imposible\\
+			\end{array}  \right
+		\end{equation}
+		
+ 	Donde $posible$ significa que se pueden hacer $x$ cantidad de proyectos e $imposible$ que no se pueden hacer dicha cantidad de proyectos.
+ 	
+ 	Se puede ver que esta funci\'on es un predicado que aplicado sobre el intervalo $[1, n]$, siendo $n$ la cantidad total de proyectos para una entrada del problema, se obtiene una secuencia de resultados $[1,1,1,1,....1,0,0,0,....,0]$. Se aprecia adem\'as que la secuencia de resultados es bimodal. Analizando el anterior razonamiento se tiene que demostrar que $f(x) = 0 => f(x + 1) = 0 $ o sea una vez que no se puedan realizar $x$ cantidad de proyectos no se pueden realizar m\'as de dicha cantidad.
+ 	
+	Se demostrar\'a por Contrarrec\'iproco:
+	
+ 	Tenemos $f(x + 1) = 1 => f(x) = 1 $, en efecto si podemos resolver $x + 1$ proyectos, basta quitar uno de los proyectos asignado para alcanzar la cantidad $x$ de proyectos deseada. Esto es posible pues no existe intersecci\'on entre la cantidad de d\'ias asignados a cada proyecto, luego quitar uno de estos con sus respectivos d\'ias no perjudica a los dem\'as. Luego por contrarrec\'iproco se cumple que $ f(x) = 0 => f(x + 1) = 0$.
+ 	
+ 	Teni\'endose este resultado se puede realizar una b\'usqueda binaria para obtener el mayor n\'umero de proyectos realizables, que ser\'ia equivalente a encontrar el primer $si$.
+ 	
+ 	Aunque para encontrar el m\'aximo n\'umero de proyectos realizables se hace en $\log{n}$ pasos, el costo de computar $f(x)$ es bastante elevado, dado que se debe probar en cada caso con los subconjuntos de tama\~no $k$ de los $n$ proyectos y verificar en orden lineal que sea posible. Si se obtiene un subconjunto v\'alido no es necesario revisar los dem\'as subconjuntos de tama\~no $k$, dado que solo es necesario que exista una forma posible, en caso que no sea posible, ser\'a necesario revisar todos los subconjuntos de tama\~no $k$ lo cual es ineficiente, en el peor de los casos ser\'ia $2^{n}$.\\ \\
+ 	 
+	 
+ 	{\Large \bf Idea 4:} \\ \\
+ 	
+ 	Un cuarto enfoque ser\'ia otra soluci\'on $greedy$, en la cual ordenamos los proyectos donde se prioricen los que menos tiempo requieren y m\'as alejados se encuentran, pues estos son los que de realizarse m\'as d\'ias libres dejan. Escoger los proyectos en este orden y realizarlos siempre que se puedan, o sea si se tienen los d\'ias necesarios disponibles hasta el d\'ia de la entrega, es siempre lo mejor, pues de decidir no hacer un proyecto que se encuentra antes siguiendo este criterio y hacer otro en su lugar que requiere m\'as d\'ias y/o termina despu\'es , igualar\'ia la cantidad de proyectos realizados(pues se sustituye uno por otro) y disminuir\'ia la cantidad de d\'ias disponibles para el resto de los proyectos que tienen fecha de entrega despu\'es, y podr\'ian hacer uso de estos, perjudicar\'ia a la larga a los proyectos posteriores.
+ 	
+ 	Para esto ordenamos los proyectos crecientemente por la raz\'on entre la cantidad de d\'ias que requiere hacer el proyecto y la fecha de entrega. Luego recorremos ese array ordenado intentando en todo momento realizar el proyecto en cuesti\'on. Para decidir si se puede hacer el proyecto o no, vemos si la cantidad de d\'ias disponibles me lo permite, para esto llevamos una variable $remain$ que me permite conocer la cantidad total de d\'ias inutilizados, si los d\'ias que requiere el proyecto es menor que $remain$ entonces existe la posibilidad, luego verificamos los d\'ias antes de la fecha de entrega, si tambi\'en son suficientes se puede realizar el proyecto, para analizar los d\'ias disponibles previos a la fecha de entrega llevamos un array donde almacenamos dicha informaci\'on, que actualizamos sobre la marcha, al igual que $remain$, para esto cada vez que se decide hacer un proyecto se disminuye $remain$ en la cantidad de d\'ias que requiere este, y se actualiza la disponibilidad particular de cada proyecto, si este se entrega despu\'es del mismo siempre va a ser afectado, luego se le substraen dichos d\'ias, en cambio si se encuentra antes no siempre lo afecta, esto lo hace solo en caso de que la diferencia de d\'ias entre las fechas de entrega del proyecto que estoy realizando y este sea menor que los d\'ias que necesita este para realizarse, de esto pasar y no ser suficiente, se le quitan solo los d\'ias que le faltan al proyecto para poderse realizar. Esto se hace por cada proyecto escogido en ese orden mientras que $remain$ sea mayor que $0$.
+ 	
+ 	Esta idea no funciona, para la mayor\'ia de los casos es de imaginarse que deber\'ian priorizarse los proyectos que menor cantidad de d\'ias requieran y antes cierren, pues ofrecen una mayor disponibilidad para el resto de los proyectos, pero sin embargo, aunque para una cantidad \'infima de casos, esta no es la mejor decisi\'on a tomar.\\ \\
+ 	
+ 	{\Large \bf Idea 5:}\\ \\
+ 	
+ 	Otra idea para enfrentar este problema es teniendo una visi\'on din\'amica al respecto. Se tendr\'a un arreglo $dp$ de dos estados $i,j$ donde se guardar\'a en $dp[i][j]$ cual es la cantidad m\'axima para realizar $i$ proyectos en $j$ d\'ias de trabajo. Como dato inicial se tiene el arreglo de tuplas que representa a los proyectos, es decir, la entrada va a ser invariante a las soluciones anteriores. 
+ 	
+ 	Inicialmente se llenar\'a $dp[i][1] = 0$ para toda i $>$ 1, ya que puede existir alg\'un proyecto que necesite un d\'ia. Pero esta relaci\'on no va a ser verdadera para valores mayores que la unidad, ya que se necesita al menos un d\'ia por proyecto. De la misma manera se va llenando dp[1][i] para toda i $>$ 1, ya que esta relaci\'on est\'a en dependencia de los d\'ias que se le asigne a cada uno. 
+ 	
+ 	Luego de llenar estos datos, se puede comenzar a realizar la programaci\'on din\'amica. Se realiza un doble ciclo para abarcar todas las posibles opciones. Pero no se van a ir insertando los proyectos en cualquier orden, sino que se ordenar\'an por la cantidad de d\'ias que necesita cada uno. El problema se encuentra en garantizar que los proyectos seleccionados no intercepten, ya que los d\'ias se pueden repartir en cualquier orden y no se tiene el control de que d\'ia habitable se toma. Esta cuesti\'on nos obliga a probar las combinaciones posibles en $i$ proyectos en $j$ d\'ias, lo que nos transporta a un algoritmo exponencial, ya que se prueban los subconjuntos de tama\~no $i$.
+ 	
+ 	Esta situaci\'on es la que se quiere evitar, ya que se quiere mejorar el orden exponencial, por ello se desisti\'o de la idea ya que no nos brinda una soluci\'on mejor que la que se tiene hasta el momento.	Luego tambi\'en es percatable que organizar los proyectos por el costo en d\'ias que lleva no es eficiente, puesto que esta organizaci\'on no siempre nos beneficia en realizar la menor cantidad de combinaciones.
+ 	
+ 	 Tambi\'en se encuentra la posibilidad de cambiar el patr\'on para organizar realiz\'andose sobre la raz\'on de costo en d\'ias y fecha de entrega, con el objetivo de ir coloc\'andolos tal que queden situados lo m\'as alejados posibles, pero igual no se tiene el control de las posiciones en d\'ias que tomen, por lo que igual hay que garantizar que no intersepten los d\'ias entre ellos, ya que esta idea no garantiza la intersecci\'on nula.
+ 	Con toda esta l\'ogica se llega a la conclusi\'on que este algoritmo no cumple con la percepci\'on de la programaci\'on din\'amica, ya que $dp[i][k]$ no nos ayuda a precalcular los posteriores. Si los d\'ias a trabajar fuera en intervalos continuos, es decir, que los d\'ias que se tomen tuvieran que ser consecutivos, entonces esta idea fuera un poco m\'as aceptable, pero este requisito no se cumple. \\
+ 	
+ 	
+ 	
+ 	{\Large \bf Idea 6:} \\ \\ 
+ 	 {\small \bf (solution1)}
+ 	
+ 	El siguiente algoritmo se basa en, dados los d\'ias de entrega dispuestos de forma creciente, inicialmente acumular los d\'ias posibles de forma tambi\'en creciente (a la entrega 1 se asociar\'an todos los d\'ias que tenga disponibles delante, que no sean festivos, hasta completar su costo de d\'ias, al d\'ia 2 se le asocian los d\'ias entre \'el y el d\'ia uno m\'as los que hayan sobrado de los anteriores al primer d\'ia, o sea, los que no cupieron en este) este proceso se realiza de forma lineal por los n d\'ias, siendo 'n' la \'ultima fecha de entrega. Luego, se va por todas las entregas (siempre de forma creciente) analizando si es mejor dejar a esa entrega con sus d\'ias asociados, o por el contrario $trasladar$ sus d\'ias hacia las fechas siguientes, esto pasar\'a si la cantidad de d\'ias restantes para completar su costo en al menos dos de dichas fechas siguientes, es menor que la cantidad de días invertidos en el proyecto actual m\'as $1$ (este incremento en uno representa el d\'ia de la entrega del proyecto actual, ya que como se renunci\'o a este proyecto, esta pasar\'ia a ser un d\'ia posible para que los siguientes proyectos trabajen). 
+ 	
+ 	Al realizar el proceso de avance por los proyectos, se revisan los proyectos siguientes y se hace un proceso auxiliar de ordenaci\'on de los proyectos de fechas mayores, de forma creciente a partir de los d\'ias restantes que tienen para completarse (o sea, los d\'ias totales necesarios, menos los d\'ias actualmente invertidos en ellos) si al restar la cantidad de d\'ias invertidos en el proyecto actual menos los d\'ias restantes de las primeras posiciones resultantes del proceso auxiliar, se pueden restar al menos dos d\'ias antes de que volver negativa la cantidad de d\'ias que el actual puede invertir (o si esta nunca se vuelve negativa a pesar de sustraerle dos o m\'as procesos), entonces efectivamente es mejor invertir los d\'ias en los procesos siguientes que en este proceso actual. Adem\'as, todos los procesos por los que se pase, que hasta el momento no hayan logrado completar su costo, siempre enviar\'an hacia atr\'as sus d\'ias actualmente invertidos, pues no tiene sentido mantenerlos. Al pasar alguna de estas situaciones, los d\'ias invertidos en el proceso actual se intentar\'an mover hacia los siguientes, siempre que sea posible (o sea, que quepan)  al aumentar los d\'ias invertidos en un proyecto, disminuyen los d\'ias pendientes, y al gastar d\'ias invertidos, incrementan los d\'ias pendientes. Al completar un proyecto, se incrementa adem\'as en uno los d\'ias invertidos, puesto que se cuenta el d\'ia de entrega del mismo, y se enciende una bandera que se\~nala que se gasta ese d\'ia invertido para tener constancia de que ya esto se realiz\'o (esta bandera tambi\'en se enciende cuando se env\'ian los d\'ias de un proceso a otro, en el proceso que env\'ia, puesto que si ya se decidi\'o no hacer ese proyecto, su d\'ia de entrega se puede usar tambi\'en en los siguientes).
+ 	
+ 	Al analizar confrontando las soluciones de casos (generados aleatoriamente mediante el $tester$) con las soluciones de la $fuerza$ $bruta$ el equipo se percat\'o de que pueden ocurrir ocaciones en que al anallizar si vale la pena invertir d\'ias de un proyecto en otros de la forma antes explicada, puede darse el caso de que resulte en respuesta negativa, sin embargo, al enviar hacia adelante los d\'ias de los procesos incompletos, puede resultar en respuesta positiva despu\'es de dichas transformaciones. Este problema se solucion\'o realizando dos veces el ciclo principal, de forma que estos casos se vuelvan a analizar luego de las transformaciones.
+ 	
+ 	Nuevamente se compar\'o las respuestas con las soluciones de la $fuerza$ $bruta$ y surgi\'o un nuevo problema. Puede darse el caso en que el algoritmo decida que es necesario repartir los d\'ias de un proyecto, sin embargo, hay delante otro proyecto que puede tambi\'en repartir sus d\'ias para completar los dos o m\'as d\'ias que el anterior pod\'ia completar, pero tener m\'as d\'ias disponibles y, por tanto, ser m\'as \'optimo para realizar esta acci\'on. Para solucionar esto se realiz\'o otro proceso auxiliar de mirar hacia adelante para comprobar la existencia de estos casos. Al recibir una respuesta afirmativa del $mirar$ $hacia$ $adelante$, se cancela la repartici\'on de d\'ias del proceso actual y este mantiene sus d\'ias invertidos.
+ 	
+ 	Al confrontar por tercera vez las soluciones, se lleg\'o a un resultado de $10000$ casos, solo $30$ fallidos, y todos estos por una diferencia modular de $1$, para desgracia de los miembros del equipo, nunca pudieron encontrar el arreglo necesario. Sin embargo, esto dio paso a nuevas v\'ias de pensamiento. \\ \\
+ 	
+ 	
+ 	{\Large \bf Idea 7:}\\  \\
+ 	 {\small \bf (greedy-solution)}
+ 	
+ 	
+ 	Se hall\'o una nueva posible soluci\'on al problema. El grupo piensa que es la acertada, pues se prob\'o con $30000$ casos generados aleatoriamente, confrontando los resultados con la $fuerza$ $bruta$, y se obtuvo $0$ diferencias de resultado), en este caso atac\'andolo con una idea $greedy$. El objetivo es arreglar los casos que no se estaban contemplando en la primera percepci\'on de soluci\'on $greedy$, en este algoritmo es posible deshacerte de proyectos tal que se aumente la cantidad de posibles a resolver. 
+ 	
+ 	Primeramente se ordenar\'an los proyectos por fecha de entrega. Se tiene un arreglo de trabajo $p$ de longitud 'mayor d\'ia de entrega de proyectos' el cual es boolean, aqu\'i se recogen los d\'ias de proyectos que se van a marcar con los d\'ias que ocupa realizarlo respectivamente. Se avanza en el orden de las entregas, y en cada entrega se analiza cu\'al es la mejor opci\'on: si poner el proyecto que se entrega en la fecha $i$ y rellenar los d\'ias que ocupa, si quitar algunos de los puestos a realizar y colocar al que se est\'a analizando, o simplemente no es conveniente agregarlo. \\
+ 	En el instante de analizar el proyecto $j$, se revisa si ocupa menos d\'ias que alg\'un proyecto que se agreg\'o, en este caso es mejor quitar el agregado y colocar este, para as\'i aumentar la cantidad de d\'ias disponibles y facilitarle a los proyectos venideros m\'as d\'ias que tomar. \\
+ 	Se tendr\'an tres posibles acciones sobre el proyecto $j$: \\
+ 	- Primero se analiza si la cantidad de d\'ias disponibles hasta el momento es mayor o igual que las necesarios para su ejecuci\'on, de cumplirse entonces se agrega. \\
+ 	- Si no, se revisa si la cantidad de d\'ias disponibles m\'as la cantidad de proyectos que no se realizaron hasta el d\'ia de entrega del proyecto j es mayor o igual que los necesarios para su ejecuci\'on, y se cae en el primer caso. \\
+ 	- En el caso que no se cumplan ninguna de las anteriores, entonces ese proyecto no es posible colocarlo y se comparan los d\'ias de trabajo que se lleva el proyecto $j$ con el mayor costo en d\'ias de los proyectos agregados, si esta comparaci\'on es menor, significa que puedo cambiar este proyecto por el de mayor costo, no se agrega ning\'un proyecto nuevo pero aumenta la cantidad de d\'ias disponibles para el an\'alisis de los proyectos venideros, y de esta manera aseguro que se puedan tomar la mayor cantidad de proyectos. \\
+ 	
+ 	En $count$ se guardar\'a la mayor cantidad de proyectos que se pueden realizar. Es necesario demostrar que este algoritmo siempre devuelve una soluci\'on v\'alida. Este requisito se cumple ya que siempre se colocan los proyectos que menor cantidad de d\'ias ocupen. No existir\'a el caso que se quede alg\'un proyecto v\'alido a realizar y no se agregue. Supongamos que ocurre, entonces significa que no existen d\'ias disponibles, el \'unico caso para que esto suceda es porque existe un proyecto agregado que impida que se inserten dos nuevos proyectos, y de esta manera poder aumentar el contador. Pero por la l\'ogica del algoritmo siempre se insertar\'an y quedar\'an guardados aquellos proyectos que se lleven la menor cantidad de dias posibles, entonces los proyectos que no est\'an es porque cambiando a alguno por alg\'un proyecto agregado no mejorar\'a esta cantidad, por lo que en este caso se llegar\'ia a una contradicci\'on ya que el proyecto v\'alido que aumentara el contador de proyectos a realizar no es posible colocarlo. \\
+ 	
+ 	\textit{DEMOSTRACI\'ON} \\ \\
+ 	
+ 	Sean los vectores de soluciones:
+ 	\begin{center}
+ 	$Opt = \{Y_{1}, Y_{2}, . . ., Y_{l} \}$ \\
+ 	$G = \{ X_{1}, X_{2}, . . ., X_{r}\}$ \\
+ 	\end{center}
+ 	Donde cada vector simboliza un proyecto escogido. Estas soluciones se encuentran ordenadas crecientemente por la fecha de entrega (tiempo de cierre). \\
+ 	
+ 	Primero demostremos los siguientes lemas: \\
+ 	\textit{Lema 1: En cada iteraci\'on de G se cumple que un proyecto que no se haya puesto en iteraciones anteriores, nunca formar\'a parte de la soluci\'on} \\ \\
+ 	\textit{Demostraci\'on:} \\ 
+ 	Sea p1 el proyecto que el greedy retir\'o de la soluci\'on, la \'unica forma en que pudiera tener una cantidad de espacios libres delante de \'el mayor o igual que su costo, ser\'ia que al analizar otro proyecto, en este caso p1, se hubiera retirado un proyecto p2, liberando una cantidad de espacios igual a la diferencia entre p2 y p1. Sea adem\'as $y$ la cantidad de espacios que tiene vaci\'ios delante p0 durante la iteraci\'on actual(analizando p1). Es evidente que p0 $>$ p2 $>$ p1 $>$ $y$. Si p0 fuera menor que p2, entonces p0 estar\'ia en la soluci\'on en lugar de p2, si p1 no fuera menor que p2, entonces no se hubiera quitado a p2 para poner a p1, y si y no fuera menor que p1, entonces p1 se hubiera colocado sin necesidad de quitar a nadie. Luego x = y + (p2 - p1 + 1), el +1 es el espacio que ocupa la entrega de p2. Entonces, siendo k = y + (-p1), k $<$ 0, entonces x = p2 + 1 + k, est\'a claro que x $<=$ p2. Luego p0 $<$ x, lo que demuestra el lema pues no quedar\'an suficientes espacios libres delante de p0 aunque se quitara a cualquier otro proyecto. \\ \\
+ 	 	
+ 	 
+ 	\textit{Lema 2: En cada iteraci\'on i se cumple que la cantidad de d\'ias disponibles que va dejando el algoritmo greedy ($disp_{G}$) va a ser mayor o igual que los d\'ias disponibles que tenga una soluci\'on \'optima ($disp_{Opt}$)} \\ \\
+ 	\textit{Demostraci\'on:}\\ \\
+ 	Supongamos que $disp_{G} < disp_{Opt}$ \\
+ 	Significa que existe iteraci\'on $i$ tal que hasta ese momento se encuentre 
+ 	\begin{center}
+ 	$\sum\limits_{k = 1}^{l} Y_{k} \leq \sum\limits_{k = 1}^{r} X_{k}$.
+ 	\end{center}
+ 	Quitemos de ambos lados de la relaci\'on aquellos que tengan igual duraci\'on (en d\'ias) en la misma iteraci\'on. Se tienen dos casos: \\ \\
+ 	\textit{1: Si $X_{k}.d < Y_{k}.d$} \\ 
+  Este caso no genera contradicci\'on. \\ \\
+  \textit{2: Si $X_{k}.d > Y_{k}.d$} \\
+  Esto significa que ambos no est\'an simult\'aneamente en $G$.\\ \\
+  \textit{2.1: Si $X_{k}.f > Y_{k}.f$} \\
+  Ser\'ia imposible porque $X_{k}.d > Y_{k}.d$. \\ \\
+  \textit{2.2: Si $X_{k}.f < Y_{k}.f$} \\
+  Se coloca $X_{k}$ y luego se coloca $Y_{k}$, por m\'aximo de ls duraciones $X_{m}$ tal que $X_{m}.d > Y_{k}.d$ (existe al menos $X_{k}$) \\ \\
+  En ambos casos disminuye $\sum\limits_{}^{} X_{k}.d$. \\
+  Tras una cantidad finita de pasos nos queda:
+  \begin{center}
+  $\sum\limits_{}^{} Y_{k}.d = \sum\limits_{}^{} Z_{k}.d$, \textit{$Z_{k} = X_{k}$ luego de ser modificado}  \\
+  \end{center}
+  Como se conoce que esta relaci\'on no puede ser: $\sum\limits_{}^{} Y_{k}.d < \sum\limits_{}^{} X_{k}.d$ \\
+  Entonces se demuestra que $\sum\limits_{}^{} Y_{k}.d \geq \sum\limits_{}^{} Z_{k}.d$ \\ 
+  O lo que es lo mismo: $disp_{G} > disp_{Opt}$. \\ \\
+  Se demostrar\'a por inducci\'on que en cada posici\'on $i$ de las soluciones $G$ y $Opt$ se cumple que $X_{i}.fecha \leq Y_{i}.fecha$. \\ \\
+  \textit{Inducci\'on:}\\ \\
+  \textit{Paso inicial : $X_{1}.fecha \leq Y_{1}.fecha$} \\
+  Supongamos que $X_{1}.fecha > Y_{1}.fecha$, si esto pasara entonces $Y_{1}$.duraci\'on  $>$  $X_{1}$.duraci\'on, de lo contrario $Y_{1} \in G$ por Lema 1 y $X_{1}$ no puede estar simult\'aneamente con $Y_{1}$. O lo que es lo mismo: no existe $X_{t} = Y_{1}$ tal que $X_{t} \in G$. Por lo tanto se tiene que
+  \begin{center}
+  $X_{1} \in G$ y $X_{1}$ no $\in Opt$, $Y_{1} \in Opt$ y $Y_{1}$ no $\in G$.
+  \end{center} 
+   De la misma manera ocurre con $X_{2}$ y $Y_{2}$, y as\'i sucesivamente.\\
+  Si se contin\'ua con este an\'alisis entonces no existe $Z_{t}$ tal que $Z_{t}$ $\in Opt$ y $Z_{t} \in G$. Esto genera una contradicci\'on ya que existen muchos casos tal que hay proyectos que coinciden en ambas soluciones, por lo tanto $X_{1}$.fecha $\leq$ $Y_{1}$.fecha. \\ \\
+  \textit{Hip\'otesis: $\forall$ posici\'on i se cumple que $X_{i}$.fecha $\leq$ $Y_{i}$.fecha} \\ \\
+  \textit{Paso Inductivo: Si $X_{i}$.fecha $\leq$ $Y_{i}$.fecha entonces $X_{i + 1}$.fecha $\leq$ $Y_{i + 1}$.fecha} \\
+  Como $Y_{i}$ y $Y_{i + 1}$ son compatibles entonces
+  \begin{center}
+  $X_{i}$.fecha $\leq$ $Y_{i}$.fecha $\leq$ $Y_{i + 1}$.fecha.\\
+  \end{center} 
+   Adem\'as $X_{i}$.fecha $\leq$ $X_{i + 1}$.fecha . \\
+  Se tienen varios casos: \\ \\
+  \textit{1: $X_{i + 1}$.fecha $\leq$ $Y_{i}$.fecha $\leq$ $Y_{i + 1}$.fecha} \\
+  Aqu\'i se cumple que $X_{i + 1}$.fecha $\leq$ $Y_{i + 1}$.fecha. \\ \\
+  \textit{2: $Y_{i}$.fecha $\leq$ $X_{i + 1}$.fecha $\leq$ $Y_{i + 1}$.fecha} \\
+  Igualmente es un caso que demuestra $X_{i + 1}$.fecha $\leq$ $Y_{i + 1}$.fecha. \\ \\
+  \textit{3: $Y_{i}$.fecha $\leq$ $Y_{i + 1}$.fecha $\leq$ $X_{i + 1}$.fecha} \\
+  En este caso es necesario demostrar que esto no puede pasar. Se dividen dos nuevos subcasos: \\
+  \textit{3.1 : $Y_{i}$.fecha $<$ $Y_{i + 1}$.fecha $=$ $X_{i + 1}$.fecha} \\
+  Equivalente al caso 2. \\ \\
+  \textit{3.2: $Y_{i}$.fecha $<$ $Y_{i + 1}$.fecha $<$ $X_{i + 1}$.fecha} \\
+  El cual se ramifica en: \\
+  \textit{3.2.1: Si $Y_{i}$.fecha $=$ $X_{i}$.fecha ya que $X_{i}$.fecha $\leq$ $Y_{i}$.fecha} \\
+  $X_{i}$.fecha $<$ $Y_{i + 1}$.fecha $<$ $X_{i+ 1}$.fecha. \\
+  Se cumple que $Y_{i + 1}$.duraci\'on $>$ $X_{i + 1}$.duraci\'on. Se tiene que $Y_{i + 1}$ tuvo la capacidad de d\'ias disponibles y luego fue quitado para poner a $X_{i + 1}$ y $Y_{i + 1}$ tuvo el espacio para $Opt$. \\
+  En el caso que $Y_{i + 1}$ estuvo en alguna iteraci\'on en G, fue porque luego fue quitado. Si $X_{i + 1}$ quit\'o a $Y_{i + 1}$ de $G$ fue porque el m\'aximo de las duraciones de los proyectos marcados a realizar fue el de $Y_{i + 1}$, entonces $Y_{i + 1}$ ocupa la mayor cantidad de d\'ias hasta el momento. En el punto $i$ se cumple que 
+  \begin{center}
+  $disp_{Opt}$ $-$ $Y_{i + 1}$.duraci\'on $<$ $disp_{G}$ $-$ $X_{i + 1}$.duraci\'on,
+  \end{center} 
+  esto se deriva de aplicar el Lema 2.\\
+  Por muy peque\~no que sea $X_{i + 1}$ no tiene los d\'ias disponibles para ponerse por culpa de $Y_{i + 1}$, esto mismo ocurre con $Opt$ por Lema 2, si $X_{i + 1}$ no cabe en $G$ tambi\'en se cumple que
+  \begin{center}
+   no existe $Y_{p}$ ,  $p \in N$ $\forall p$ $i + 2 \leq p \leq l$ tal que $Y_{p} \in Opt$ y tenga espacio disponible, $Y_{p}$.fecha $\geq$ $X_{i + 1}$.fecha y se cumpla adem\'as $Y_{p}$.duraci\'on $\geq$ $X_{i + 1}$.duraci\'on $+$ $c$, donde $c$ son los d\'ias disponibles despu\'es de $X_{i + 1}$.
+  \end{center}
+  No es necesario tomar los siguientes casos ya que pueden existir varios proyectos que ocupen $Opt$ teniendo a $Y_{i + 1}$ pero estos son los que cumplen que \\ 
+  \begin{center}
+  $Y_{p}$.duraci\'on $\leq$ $Y_{i + 1}$.duraci\'on + $disp_{Opt}$, 
+  \end{center} y los mismos tambi\'en se contemplan en $G$, por fusi\'on de Lema 1 y Lema 2. Luego de este razonamiento nos queda que la cardinalidad de $G$ pudiera ser mayor que $Opt$, lo cual es una contradicci\'on. Por tanto $X_{i + 1}$.fecha $\leq$ $Y_{i + 1}$.fecha. \\
+  En el caso que nunca estuvo $Y_{i + 1}$, entonces queda claro que nunca se pudo poner en $G$, por lo tanto tampoco tendr\'a espacio para $Opt$ (Lema 2). \\ \\
+  \textit{3.2.2: $X_{i}$.fecha $<$ $Y_{i}$.fecha $<$ $Y_{i + 1}$.fecha $<$ $X_{i + 1}$.fecha} \\
+  Significa que $Y_{i}$, $Y_{i + 1}$ no pertenecen a $G$, entonces $Y_{i}$.duraci\'on $+$ $Y_{i + 1}$.duraci\'on $>$ $disp_{G}$. Por el Lema 1 se tiene que estos dos proyectos nunca podr\'an colocarse en $G$. Como en el algoritmo greedy siempre se colocan los proyectos de manera tal que se quede la mayor cantidad de d\'ias disponibles, se puede afirmar que si $Y_{i}$ y $Y_{i + 1}$ no son posibles e colocarse en $G$ tampoco es posible que puedan estar simult\'aneamente en $Opt$. por lo cual esta relaci\'on es una contradicci\'on, y por tanto se cumple que $X_{i + 1}$.fecha $\leq$ $Y_{i + 1}$.fecha por Lema 2. \\ \\
+  Por tanto se demostr\'o por inducci\'on que $X_{i}$.fecha $\leq$ $Y_{i}$.fecha. \\
+  Como $r \leq l$, y $r$ no puede ser menor que l ya que no se puede tener m\'as \'optimo que el procesado, $X_{r}$ es el \'ultimo procesado. \\
+   Por Lema 2 $disp_{G}$ $>$ $disp_{Opt}$ entonces la mayor cardinalidad de $Opt$ es $r$, ya que en todo momento se trata de dejar la mayor cantidad de d\'ias disponibles posibles lo que resulta permitir agregar la mayor cantidad de proyectos posibles. Entonces $r = l$, por lo tanto $G$ es una soluci\'on \'optima. \\
+     
+ 	
+ 	 	
+ 	{\Large \bf Idea 7:}\\  \\
+ 	{\small \bf (greedy-solution-upgraded)}
+ 	
+ 	El algoritmo anterior ten\'ia un costo de $n^{2}$, puesto que por cada iteraci\'on del ciclo principal (que visita los n proyectos), existe la posibilidad de que sea necesario revisar todos los proyectos de fecha de entrega menor en busca de uno de mayor costo, para introducir el nuevo en la respuesta y retirar el anterior. Luego de analizar esto, fue evidente que no era necesario revisarlos todos, es posible, mediante un heap, mantener en $\log{n}$ siempre al posible retirado. Con una simple modificaci\'on, la complejidad temporal del algoritmo disminuy\'o a $n*\log{n}$. Las anteriores ideas y demostraciones, claramente, se mantienen para el algoritmo nuevo.
+ 
+  }
+ \end{document}
